@@ -1,6 +1,7 @@
 import { Component, Input, OnInit} from '@angular/core';
 import { tile, Tiles } from '../tiles';
 import { TileIcon } from '../tile/tileIcon';
+import { WordValidity } from '../words';
 
 @Component({
   selector: 'app-hand',
@@ -38,5 +39,15 @@ export class Hand implements OnInit {
 
   onTileRightClick(tile: tile) {
     console.log(tile, "Right click");
+  }
+
+  submitWord() {
+    this.tilesService.submitWord(this.wordTiles).subscribe(validity => {
+      if (validity === WordValidity.VALID) {
+        this.handTiles = this.tilesService.getHand();
+        this.unusedTiles = [...this.handTiles];
+        this.wordTiles = [];
+      }
+    });
   }
 }

@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Words, WordValidity } from './words';
+import { Observable } from 'rxjs';
 
 export interface tile {
   letter: string;
@@ -86,7 +88,7 @@ export class Tiles {
     return [...this.discard];
   }
 
-  constructor() {
+  constructor(private wordsService: Words) {
     
   }
 
@@ -161,5 +163,26 @@ export class Tiles {
     this.drawTop(false, true);
     this.drawTop();
     this.drawTop();
+  }
+
+  public submitWord(wordTiles: tile[]): Observable<WordValidity> {
+    const word = wordTiles.map(t => t.letter).join('');
+
+    return new Observable(observer => {
+      this.wordsService.checkWord(word).subscribe(validity => {
+      
+        if (validity === WordValidity.VALID) {
+          wordTiles.forEach(t => this.discardTile(t));
+        
+          const tilesNeeded = 7 - this.hand.length;
+          for (let i = 0; i < tilesNeeded; i++) {
+            this.drawTop();
+          }
+        }
+      
+        observer.next(validity);
+        observer.complete();
+      });
+    });
   }
 }

@@ -2,10 +2,15 @@ import { Injectable } from '@angular/core';
 import { Words, WordValidity } from './words';
 import { Observable } from 'rxjs';
 
+export enum Tag {
+  STONE = 'STONE',
+  
+}
 export interface tile {
   letter: string;
   letters: string[];
   points: number;
+  tags?: Tag[];
 }
 
 export const baseTiles: { [key: string]: tile } = {
@@ -165,21 +170,25 @@ export class Tiles {
     this.drawTop();
   }
 
+  public addTileToHand(tile: tile) {
+    this.hand.push(tile);
+  }
+
   public submitWord(wordTiles: tile[]): Observable<WordValidity> {
     const word = wordTiles.map(t => t.letter).join('');
 
     return new Observable(observer => {
       this.wordsService.checkWord(word).subscribe(validity => {
-      
+
         if (validity === WordValidity.VALID) {
           wordTiles.forEach(t => this.discardTile(t));
-        
+
           const tilesNeeded = 7 - this.hand.length;
           for (let i = 0; i < tilesNeeded; i++) {
             this.drawTop();
           }
         }
-      
+
         observer.next(validity);
         observer.complete();
       });

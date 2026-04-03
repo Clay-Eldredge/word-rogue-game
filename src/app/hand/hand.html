@@ -1,0 +1,21 @@
+<div class="tile_word_row">
+    @for (tile of wordTiles; track $index) {
+        <app-tile-icon
+            [tileData]="tile"
+            (leftclick)="removeTileFromWord($event)" 
+            (rightClick)="onTileRightClick($event)"
+        ></app-tile-icon>
+    }
+</div>
+<div class="tile_hand_row">
+    @for (tile of unusedTiles; track $index) {
+        <app-tile-icon
+            [tileData]="tile"
+            (leftclick)="addTileToWord($event)" 
+            (rightClick)="onTileRightClick($event)"
+        ></app-tile-icon>
+    }
+</div>
+<div class="controls_div">
+    <button>Submit</button>
+</div>

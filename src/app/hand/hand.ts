@@ -2,10 +2,11 @@ import { Component, Input, OnInit} from '@angular/core';
 import { tile, Tiles } from '../tiles';
 import { TileIcon } from '../tile/tileIcon';
 import { WordValidity } from '../words';
+import { InfoModal } from "../info-modal/info-modal";
 
 @Component({
   selector: 'app-hand',
-  imports: [TileIcon],
+  imports: [TileIcon, InfoModal],
   templateUrl: './hand.html',
   styleUrl: './hand.scss',
 })
@@ -14,6 +15,11 @@ export class Hand implements OnInit {
   wordTiles: tile[] = [];
   unusedTiles: tile[] = [];
   
+  modalX = 0;
+  modalY = 0;
+  selectedTile: tile | null = null;
+  infoVisible = false;
+
   constructor(private tilesService: Tiles) {
 
   }
@@ -37,10 +43,6 @@ export class Hand implements OnInit {
     this.unusedTiles.push(tileToAdd);
   }
 
-  onTileRightClick(tile: tile) {
-    console.log(tile, "Right click");
-  }
-
   submitWord() {
     this.tilesService.submitWord(this.wordTiles).subscribe(validity => {
       if (validity === WordValidity.VALID) {
@@ -50,4 +52,22 @@ export class Hand implements OnInit {
       }
     });
   }
+
+  openModal(event: { x: number; y: number; tile: tile }) {
+    this.modalX = event.x;
+    this.modalY = event.y;
+    this.selectedTile = event.tile;
+
+    this.infoVisible = true;
+  }
+
+  @HostListener('document:click', ['$event'])
+@HostListener('document:contextmenu', ['$event'])
+handleOutsideClick(event: MouseEvent) {
+  const target = event.target as HTMLElement;
+
+  if (!target.closest('.modal')) {
+    this.infoVisible = false;
+  }
+}
 }

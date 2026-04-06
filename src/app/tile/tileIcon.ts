@@ -1,26 +1,33 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
 import { tile } from '../tiles';
+import { InfoModal } from "../info-modal/info-modal";
 
 @Component({
   selector: 'app-tile-icon',
-  imports: [],
+  imports: [InfoModal],
   templateUrl: './tileIcon.html',
   styleUrl: './tileIcon.scss',
 })
 export class TileIcon {
-  @Input() tileData: tile = {letter: 'a', letters: ['a'], points: 1};
+  @Input() tileData: tile = { letter: 'a', letters: ['a'], points: 1 };
 
   @Output() leftclick = new EventEmitter<tile>();
-  @Output() rightClick = new EventEmitter<tile>();
+  @Output() openInfo = new EventEmitter<{ x: number; y: number; tile: tile }>();
 
   private holdTimeout: any;
-  private holdDuration = 500;
+  private holdDuration = 400;
+  private justOpenedFromHold = false;
   public isAlt = false;
+  public infoX = 0;
+  public infoY = 0;
 
   onMouseDown(event: MouseEvent) {
     if (event.button === 0) {
+      const element = event.currentTarget as HTMLElement;
+
       this.holdTimeout = setTimeout(() => {
-        this.rightClick.emit(this.tileData);
+        this.openFromElement(element, event);
+        this.justOpenedFromHold = true;
         this.holdTimeout = null;
       }, this.holdDuration);
     }
@@ -31,6 +38,7 @@ export class TileIcon {
       if (this.holdTimeout) {
         clearTimeout(this.holdTimeout);
         this.leftclick.emit(this.tileData);
+        event.stopPropagation();
       }
       this.holdTimeout = null;
     }
@@ -43,9 +51,20 @@ export class TileIcon {
     }
   }
 
-  onRightClick(event: MouseEvent) {
+  openFromElement(element: HTMLElement, event: MouseEvent) {
     event.preventDefault();
-    this.isAlt = !this.isAlt;
-    this.rightClick.emit(this.tileData);
+    event.stopPropagation();
+
+    const rect = element.getBoundingClientRect();
+
+    this.openInfo.emit({
+      x: rect.left,
+      y: rect.bottom,
+      tile: this.tileData
+    });
+  }
+
+  onRightClick(event: MouseEvent) {
+    this.openFromElement(event.currentTarget as HTMLElement, event);
   }
 }

@@ -3,7 +3,7 @@
         <app-tile-icon
             [tileData]="tile"
             (leftclick)="removeTileFromWord($event)" 
-            (rightClick)="onTileRightClick($event)"
+            (openInfo)="openModal($event)"
         ></app-tile-icon>
     }
 </div>
@@ -12,7 +12,7 @@
         <app-tile-icon
             [tileData]="tile"
             (leftclick)="addTileToWord($event)" 
-            (rightClick)="onTileRightClick($event)"
+            (openInfo)="openModal($event)"
         ></app-tile-icon>
     }
 </div>
@@ -22,3 +22,9 @@
         >Submit
     </button>
 </div>
+<app-info-modal
+    [x]="modalX"
+    [y]="modalY"
+    [visible]="infoVisible"
+    [tile]="selectedTile">
+</app-info-modal>

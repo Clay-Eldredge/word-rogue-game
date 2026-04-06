@@ -1,0 +1,63 @@
+@use '../../animations.scss' as *;
+
+.tile-button {
+    animation: popIn 0.3s;
+    width: 56px;
+    height: 56px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-transform: uppercase;
+
+    border: none;
+    border-radius: 12px;
+
+    cursor: pointer;
+    user-select: none;
+
+    // Color + depth
+    background: linear-gradient(145deg, #f5f5f5, #dcdcdc);
+    color: #222;
+
+    box-shadow:
+        0 4px 0 #bdbdbd, // bottom edge (depth)
+        0 6px 12px rgba(0, 0, 0, 0.15); // soft shadow
+
+    transition:
+        transform 120ms ease,
+        box-shadow 120ms ease,
+        background 120ms ease;
+
+    // Pop-in animation
+    animation: popIn 180ms ease-out;
+
+    // Hover (slight lift)
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow:
+            0 6px 0 #bdbdbd,
+            0 10px 16px rgba(0, 0, 0, 0.18);
+    }
+
+    // Active (pressed down)
+    &:active {
+        transform: translateY(2px);
+        box-shadow:
+            0 2px 0 #bdbdbd,
+            0 3px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    // Optional: right-click / alternate state
+    &.alt {
+        background: linear-gradient(145deg, #d0e6ff, #a8d0ff);
+        color: #0b3d91;
+        box-shadow:
+            0 4px 0 #7fb3ff,
+            0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+}

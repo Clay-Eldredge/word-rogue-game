@@ -1,7 +1,26 @@
+.tile_word_row,
 .tile_hand_row {
-    border: 1px blue solid;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  gap: 8px;
+  padding: 8px;
+
+  min-height: 64px;
+
+  background: #f8f8f8;
+  border-radius: 10px;
 }
 
+/* Word row (top) */
 .tile_word_row {
-    border: 1px red solid;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+/* Hand row (bottom) */
+.tile_hand_row {
+  justify-content: center;
+  flex-wrap: wrap;
 }

@@ -15,6 +15,7 @@ export class TileIcon {
 
   private holdTimeout: any;
   private holdDuration = 500;
+  public isAlt = false;
 
   onMouseDown(event: MouseEvent) {
     if (event.button === 0) {
@@ -44,6 +45,7 @@ export class TileIcon {
 
   onRightClick(event: MouseEvent) {
     event.preventDefault();
+    this.isAlt = !this.isAlt;
     this.rightClick.emit(this.tileData);
   }
 }

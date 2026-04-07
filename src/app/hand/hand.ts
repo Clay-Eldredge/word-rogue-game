@@ -1,4 +1,4 @@
-import { Component, Input, OnInit} from '@angular/core';
+import { Component, HostListener, Input, OnInit} from '@angular/core';
 import { tile, Tiles } from '../tiles';
 import { TileIcon } from '../tile/tileIcon';
 import { WordValidity } from '../words';
@@ -62,12 +62,12 @@ export class Hand implements OnInit {
   }
 
   @HostListener('document:click', ['$event'])
-@HostListener('document:contextmenu', ['$event'])
-handleOutsideClick(event: MouseEvent) {
-  const target = event.target as HTMLElement;
+  @HostListener('document:contextmenu', ['$event'])
+  handleOutsideClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
 
-  if (!target.closest('.modal')) {
-    this.infoVisible = false;
+    if (!target.closest('.modal')) {
+      this.infoVisible = false;
+    }
   }
-}
 }

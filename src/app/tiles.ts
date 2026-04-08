@@ -13,7 +13,7 @@ export enum TileClass {
   FIRE = 'FIRE',
 }
 
-// Cosmetic variation: Font
+// Cosmetic variation: Texture / Image behind letter
 export enum TileTrait {
   DUPLICATING = 'DUPLICATING',
   PH = 'PH',

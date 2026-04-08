@@ -3,5 +3,17 @@
         class="modal"
         [style.left.px]="x"
         [style.top.px]="y"
-    ><p>hey</p></div>
+    >
+    @if (tile?.class; as class) {
+        <span>{{class}}</span>
+    }
+    @if (tile?.trait; as trait) {
+        <span>{{trait}}</span>
+    }
+    @if (tile?.tags; as tags) {
+        @for (tag of tags; track $index) {
+            <span>{{tag}}</span>
+        }
+    }
+    </div>
 }

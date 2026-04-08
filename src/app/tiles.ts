@@ -2,15 +2,30 @@ import { Injectable } from '@angular/core';
 import { Words, WordValidity } from './words';
 import { Observable } from 'rxjs';
 
-export enum Tag {
-  STONE = 'STONE',
-  
+// Cosmetic variation: * symbol in corner for any number of tags
+export enum TileTag {
+  DOUBLE = 'DOUBLE',
 }
+
+// Cosmetic variation: Color + Texture
+export enum TileClass {
+  STONE = 'STONE',
+  FIRE = 'FIRE',
+}
+
+// Cosmetic variation: Font
+export enum TileTrait {
+  DUPLICATING = 'DUPLICATING',
+  PH = 'PH',
+}
+
 export interface tile {
   letter: string;
   letters: string[];
   points: number;
-  tags?: Tag[];
+  tags?: TileTag[];
+  class?: TileClass;
+  trait?: TileTrait;
 }
 
 export const baseTiles: { [key: string]: tile } = {

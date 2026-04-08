@@ -1,10 +1,11 @@
 import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
 import { tile } from '../tiles';
 import { InfoModal } from "../info-modal/info-modal";
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-tile-icon',
-  imports: [InfoModal],
+  imports: [InfoModal, CommonModule],
   templateUrl: './tileIcon.html',
   styleUrl: './tileIcon.scss',
 })

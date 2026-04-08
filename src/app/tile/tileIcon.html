@@ -1,7 +1,10 @@
-<button class="tile-button" [class.alt]="isAlt"
+<button class="tile-button" 
+  [class.alt]="isAlt"
+  [class]="'tile-button tile-' + tileData.class + ' tile-' + tileData.trait"
   (mousedown)="onMouseDown($event)"
   (mouseup)="onMouseUp($event)"
   (mouseleave)="onMouseLeave()"
   (contextmenu)="onRightClick($event)">
-  {{ tileData.letter }}
+  
+  <span class="tile-letter">{{ tileData.letter }}</span>
 </button>
